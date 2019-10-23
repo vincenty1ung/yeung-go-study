@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/logs"
 	"net/http"
+	"time"
 )
 
 //创建log
@@ -39,15 +40,87 @@ func main() {
 	//创建一个新的http路由管理器
 	mux := http.NewServeMux()
 	mux.HandleFunc("/index", indexHandler)
+	//handler
+	mux.Handle("/hello", loggingHandler(&HtmlHandler{}))
+	//handler处理器
+	mux.HandleFunc("/hello1", hello)
 	//只是监听8080端口
 	_ = http.ListenAndServe(":8080", mux)
 
 	//Clinet -> Requests ->  [Multiplexer(router) -> handler  -> Response -> Clinet
-	man := Man{name: "zhangbo", age: 15, length: 13}
-	man.handleFunc(man.age, atLastHandleForAge)
-	man.handleFunc(man.length, atLastHandleForLength)
+	//man := Man{name: "zhangbo", age: 15, length: 13}
+	//man.handleFunc(man.age, atLastHandleForAge)
+	//man.handleFunc(man.length, atLastHandleForLength)
 }
 
+/*
+	1.创建自定义的handler
+	定义一个结构体，并且去实现http.handler接口
+*/
+type HtmlHandler struct {
+}
+
+func (htmlHandler *HtmlHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	//声明响应的数据为html
+	w.Header().Set("Content-Type", "text/html")
+	logs.Info("设置响应头%s 为：%s", "Content-Type", "text/html")
+
+	html := `<doctype html>
+        <html>
+        <head>
+          <title>Hello World</title>
+        </head>
+        <body>
+        <p>
+          <a href="/welcome">Welcome</a> |  <a href="/message">Message</a>
+        </p>
+        </body>
+		</html>`
+	_, _ = fmt.Fprint(w, html)
+}
+
+/*
+	2.创建handler处理器
+*/
+func hello(w http.ResponseWriter, r *http.Request) {
+	//声明响应的数据为html
+	w.Header().Set("Content-Type", "text/html")
+	logs.Info("设置响应头%s 为：%s", "Content-Type", "text/html")
+
+	html := `<doctype html>
+        <html>
+        <head>
+          <title>Hello World</title>
+        </head>
+        <body>
+        <p>
+          <a href="/welcome">Welcome</a> |  <a href="/message">Message</a>
+        </p>
+        </body>
+		</html>`
+	_, _ = fmt.Fprint(w, html)
+}
+
+/*
+	3.函数式范式
+*/
+func middlewareHandler(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// 执行handler之前的逻辑
+		next.ServeHTTP(w, r)
+		// 执行完毕handler后的逻辑
+	})
+}
+func loggingHandler(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		log.Info("Started %s %s", r.Method, r.URL.Path)
+		next.ServeHTTP(w, r)
+		log.Info("Comleted %s in %v", r.URL.Path, time.Since(start))
+	})
+}
+
+//===========================================type func=================================================
 type Man struct {
 	name   string
 	age    int
