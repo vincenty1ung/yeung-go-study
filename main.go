@@ -26,7 +26,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-
+	man := Man{name: "zhangbo", age: 15, length: 13}
+	man.handleFunc(man.age, atLastHandleForAge)
+	man.handleFunc(man.length, loggingNumHandler(atLastHandleForLength))
 	//===================test====================
 	//an official log.Logger with prefix ORM
 	log.Info("======================")
@@ -48,9 +50,7 @@ func main() {
 	_ = http.ListenAndServe(":8080", mux)
 
 	//Clinet -> Requests ->  [Multiplexer(router) -> handler  -> Response -> Clinet
-	//man := Man{name: "zhangbo", age: 15, length: 13}
-	//man.handleFunc(man.age, atLastHandleForAge)
-	//man.handleFunc(man.length, atLastHandleForLength)
+
 }
 
 /*
@@ -152,4 +152,14 @@ func (man Man) handleFunc(num int, atLastHandle func(num int)) {
 }
 func atLastCall(int int, numHandler NumHandler) {
 	numHandler.handle(int)
+}
+
+func loggingNumHandler(handlerInt HandlerInt) HandlerInt {
+	return HandlerInt(func(num int) {
+		//之前
+		log.Info("之前")
+		handlerInt.handle(num)
+		//之后
+		log.Info("之后")
+	})
 }
