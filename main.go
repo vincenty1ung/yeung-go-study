@@ -114,9 +114,9 @@ func middlewareHandler(next http.Handler) http.Handler {
 func loggingHandler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
-		log.Info("Started %s %s", r.Method, r.URL.Path)
+		log.Info("开始请求，请求类型：%s 请求地址：%s 请求地址：%s", r.Method, r.URL.Path, r.Host)
 		next.ServeHTTP(w, r)
-		log.Info("Comleted %s in %v", r.URL.Path, time.Since(start))
+		log.Info("请求完成，请求地址：%s 耗时：%v", r.URL.Path, time.Since(start))
 	})
 }
 
