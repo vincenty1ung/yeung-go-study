@@ -118,6 +118,13 @@ func loggingHandler(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 		log.Info("请求完成，请求地址：%s 耗时：%v", r.URL.Path, time.Since(start))
 	})
+
+	/*return func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		log.Info("开始请求，请求类型：%s 请求地址：%s 请求地址：%s", r.Method, r.URL.Path, r.Host)
+		next.ServeHTTP(w, r)
+		log.Info("请求完成，请求地址：%s 耗时：%v", r.URL.Path, time.Since(start))
+	}*/
 }
 
 //===========================================type func=================================================
@@ -155,11 +162,22 @@ func atLastCall(int int, numHandler NumHandler) {
 }
 
 func loggingNumHandler(handlerInt HandlerInt) HandlerInt {
-	return HandlerInt(func(num int) {
+	/*
+		一下这个位置将func(num int){}，强转为type HandlerInt
+		return HandlerInt(func(num int) {
+			//之前
+			log.Info("之前")
+			handlerInt.handle(num)
+			//之后
+			log.Info("之后")
+		})
+	*/
+	//等价于函数
+	return func(num int) {
 		//之前
 		log.Info("之前")
 		handlerInt.handle(num)
 		//之后
 		log.Info("之后")
-	})
+	}
 }
