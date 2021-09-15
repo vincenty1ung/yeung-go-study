@@ -5,6 +5,7 @@ import (
 	"math"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 // LeetMain
@@ -71,6 +72,57 @@ func LeetMain() {
 	*/
 	fmt.Println(maxArea([]int{1, 8, 6, 2, 5, 4, 8, 3, 7}))
 
+	/*
+		14. 最长公共前缀编写一个函数来查找字符串数组中的最长公共前缀。
+		如果不存在公共前缀，返回空字符串 ""。
+	*/
+	fmt.Println(longestCommonPrefix([]string{"flo", "flower", "flower", "f"}))
+
+}
+
+func longestCommonPrefix(strs []string) string {
+	tagetStr := strs[0]
+	for _, str := range strs {
+		for !strings.HasPrefix(str, tagetStr) {
+			if len(tagetStr) == 0 {
+				return ""
+			}
+			tagetStr = tagetStr[0 : len(tagetStr)-1]
+		}
+	}
+	return tagetStr
+}
+
+func longestCommonPrefix1(strs []string) string {
+	tmpstr := ""
+	m := make(map[string]int)
+	tagetStr := strs[0]
+	tagetBytes := []byte(tagetStr)
+	for i, runestr := range tagetBytes {
+		for _, value := range strs {
+			if i > len(value)-1 {
+				break
+			}
+			bytes := []byte(value)
+			for _, ascci := range bytes {
+				if runestr == ascci {
+					if i, ok := m[string(rune(runestr))]; ok {
+						m[string(rune(runestr))] = i + 1
+					} else {
+						m[string(rune(runestr))] = 1
+					}
+					break
+				}
+			}
+		}
+	}
+	for k, v := range m {
+		if v < len(strs) {
+			break
+		}
+		tmpstr += k
+	}
+	return tmpstr
 }
 
 // 迭代比较每两个点的面积
@@ -127,8 +179,8 @@ func reverse(x int32) int32 {
 	return tmp
 }
 
-// 平均数
 func findAveragArrays(nums1 []int, nums2 []int) float64 {
+	// 平均数
 	if len(nums1) == 0 && len(nums2) == 0 {
 		return 0
 	}
