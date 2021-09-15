@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+	"web-test/leet"
 
 	"github.com/astaxie/beego/logs"
 )
@@ -27,17 +28,19 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// 函数式范式
-	handleFunc()
-	// 日志处理
-	logHandler()
-	// http处理
-	httpHandler()
-	// slice 指针 基础结构学习
-	slicePHandler()
-	// struct 指针 基础结构学习
-	structPHandler()
-
+	/*
+		// 函数式范式
+		handleFunc()
+		// 日志处理
+		logHandler()
+		// http处理
+		httpHandler()
+		// slice 指针 基础结构学习
+		slicePHandler()
+		// struct 指针 基础结构学习
+		structPHandler()
+	*/
+	leet.LeetMain()
 }
 
 func handleFunc() {
