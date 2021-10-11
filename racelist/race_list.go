@@ -100,6 +100,29 @@ func (lists *listener) del(ableargs able) {
 		back = back.Prev()
 	}
 }
+
+// 出现问题 panic: runtime error: comparing uncomparable type main.funcable
+func (lists *listener) del1(ableargs able) {
+	lists.mutexRw.RLock()
+	back := lists.list.Back()
+	lists.mutexRw.RUnlock()
+	for back != nil {
+		value := back.Value
+		v, ok := value.(able)
+		if !ok {
+			continue
+		}
+		// panic: runtime error: comparing uncomparable type main.funcable
+		if v == ableargs {
+			lists.mutexRw.Lock()
+			lists.list.Remove(back)
+			lists.mutexRw.Unlock()
+			break
+		}
+		back = back.Prev()
+	}
+}
+
 func (lists *listener) notify() {
 	lists.mutexRw.RLock()
 	defer lists.mutexRw.RUnlock()
