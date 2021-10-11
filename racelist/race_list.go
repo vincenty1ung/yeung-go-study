@@ -61,9 +61,9 @@ func (lists *listener) add(ableargs able) {
 	)
 }
 func (lists *listener) del(ableargs able) {
-	lists.mutexRw.Lock()
-	defer lists.mutexRw.Unlock()
+	lists.mutexRw.RLock()
 	back := lists.list.Back()
+	lists.mutexRw.RUnlock()
 	for back != nil {
 		value := back.Value
 		listenerValueOf := reflect.ValueOf(value)
@@ -71,7 +71,9 @@ func (lists *listener) del(ableargs able) {
 		switch listenerValueOfKind {
 		case reflect.Struct:
 			if value == ableargs {
+				lists.mutexRw.Lock()
 				lists.list.Remove(back)
+				lists.mutexRw.Unlock()
 				break
 			}
 		case reflect.Ptr:
@@ -79,12 +81,16 @@ func (lists *listener) del(ableargs able) {
 			valueR := reflect.ValueOf(ableargs)
 			if valueR.Kind() == reflect.Struct {
 				if value == ableargs {
+					lists.mutexRw.Lock()
 					lists.list.Remove(back)
+					lists.mutexRw.Unlock()
 					break
 				}
 			} else if valueR.Kind() == reflect.Func {
 				if valueR.Pointer() == listenerValueOf.Pointer() {
+					lists.mutexRw.Lock()
 					lists.list.Remove(back)
+					lists.mutexRw.Unlock()
 					break
 				}
 			}
