@@ -9,18 +9,22 @@ import (
 	"github.com/tal-tech/go-zero/core/logx"
 )
 
+/*
+1.协议选型
+2.序列化于反序列化类型json/protubuf
+*/
 func server() {
 	logx.Info("server: 启动服务端...")
 	// net.Listen()
 	// ListenAndBind
-	tcp, _ := net.Listen("tcp", "127.0.0.1:8099")
+	listener, _ := net.Listen("tcp", "127.0.0.1:8099")
 	// accept
 	defer func(tcp net.Listener) {
 		err := tcp.Close()
 		if err != nil {
 			logx.Error(err)
 		}
-	}(tcp)
+	}(listener)
 
 	select {
 	case <-chanEXIT:
@@ -29,11 +33,6 @@ func server() {
 	default:
 
 	}
-	logx.Info("server: acceptTCP")
-	go accept(tcp)
-}
-
-func accept(listener net.Listener) {
 	for {
 		// 阻塞在这里等待新的全连接套接字 io多路复用 内核阻塞 g挂起
 		acceptTCP, err := listener.Accept()
@@ -54,7 +53,6 @@ func handleConn(c net.Conn) {
 			logx.Error(err)
 		}
 	}(c)
-
 	for {
 		bytes := make([]byte, 1024)
 		// io多路复用 内核阻塞 g挂起
@@ -70,17 +68,8 @@ func handleConn(c net.Conn) {
 			logx.Error(err)
 			return
 		}
-
-		logx.Info(fmt.Sprintf("server:收到请求: %v", sreq))
-
-		time.Sleep(time.Second * 2)
-		logx.Info("server: 业务操作处理耗时2秒")
-		logx.Info("server: 业务操作处理完成")
-
-		sresp := &resp{
-			Msg:       fmt.Sprintf("你好啊:%s号客户端.", sreq.Msg[len(sreq.Msg)-1:len(sreq.Msg)]),
-			LocalAddr: c.LocalAddr().String(),
-		}
+		// 业务处理
+		sresp := invoke(*sreq, c.LocalAddr().String())
 		srespmarshal, err := json.Marshal(sresp)
 		if err != nil {
 			logx.Error(err)
@@ -93,4 +82,17 @@ func handleConn(c net.Conn) {
 			return
 		}
 	}
+}
+
+func invoke(sreq req, addr string) resp {
+	logx.Info(fmt.Sprintf("server:收到请求: %v", sreq))
+	time.Sleep(time.Second * 2)
+	logx.Info("server: 业务操作处理耗时2秒")
+	logx.Info("server: 业务操作处理完成")
+	sresp := resp{
+		Msg:       fmt.Sprintf("你好啊:%s号客户端.", sreq.Msg[len(sreq.Msg)-1:len(sreq.Msg)]),
+		LocalAddr: addr,
+	}
+	return sresp
+
 }

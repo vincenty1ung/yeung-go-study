@@ -63,7 +63,7 @@ func client() {
 				}
 
 				logx.Info(fmt.Sprintf("client:收到服务端响应: %v", res))
-				time.Sleep(time.Millisecond * 100)
+				time.Sleep(time.Millisecond * 10)
 				index++
 				if index == 20 {
 					w.Done()
