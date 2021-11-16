@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sort"
+	"unsafe"
 
 	"github.com/tal-tech/go-zero/core/fx"
 )
@@ -21,7 +22,10 @@ func main() {
 	fmt.Println(cap(is))
 }
 
-type man struct{ Age int }
+type man struct {
+	Age  int
+	Name string
+}
 
 func (m *man) String() string { return "age:" + fmt.Sprintf("%d", m.Age) }
 func TestNamec4() {
@@ -53,6 +57,8 @@ func bu(age int, mans *[]*man) {
 	} else {
 		m.Age = age
 	}
+	m.Name = "大叔大婶多"
+	fmt.Println(unsafe.Sizeof(m))
 	if m != nil {
 		*mans = append(*mans, m)
 	}

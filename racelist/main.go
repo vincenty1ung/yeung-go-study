@@ -140,4 +140,12 @@ func main() {
 	time.Sleep(time.Second * 5)
 	fmt.Println("+++++++++++++")
 	lists.notify()
+
+	ablef := newAlbe3(
+		func() {
+			fmt.Println("G6")
+		},
+	)
+
+	fmt.Println(ablef == ablef)
 }
