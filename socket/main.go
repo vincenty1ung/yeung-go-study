@@ -37,7 +37,8 @@ func main() {
 	go server()
 	// 客户端
 	time.Sleep(time.Second * 2)
-	client()
+	//client()
+	pollclient()
 	time.Sleep(time.Second * 10)
 	logx.Info("main: exit")
 }
