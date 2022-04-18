@@ -1,6 +1,16 @@
 package main
 
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+void myprint(char* s) {
+    printf("%s\n", s);
+}
+*/
+
 import (
+	"C"
 	"fmt"
 	"strconv"
 )
@@ -17,10 +27,17 @@ func main() {
 	for i := 0; i < 100; i++ {
 		int64s = append(int64s, int64(i))
 	}
-	//test1(int64s)
+	// test1(int64s)
 	is := int64s[100:]
 
 	fmt.Println(is)
+
+	fmt.Println(1002 / 500)
+	fmt.Println(1002 % 500)
+	fmt.Println(499 % 500)
+	fmt.Println(499 / 500)
+
+	C.myprint("s")
 
 }
 
