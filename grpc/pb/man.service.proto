@@ -1,0 +1,27 @@
+syntax = "proto3";
+option objc_class_prefix = "PB3";
+option go_package = "github.com/uncleyeung/yeung-go-study/grpc/pb";
+package pb;
+
+// 指定输出 go 语言的源码到哪个目录以及文件名称
+// 最终在 test.proto 目录生成 test.pb.go
+// 也可以只填写 "./"
+
+// 如果要输出其它语言的话
+// option csharp_package="MyTest";
+
+service ManService{
+  rpc GetMan(GetManRequest) returns (GetManResponse){}
+}
+
+// 函数参数
+message GetManRequest{
+  int32  id = 1; //id
+  map<string, string>  man_map = 2; //man_map
+  bytes bytes = 3;//bytes
+}
+
+// 函数返回值
+message GetManResponse{
+  string backJson = 1;
+}

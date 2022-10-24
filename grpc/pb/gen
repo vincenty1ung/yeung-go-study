@@ -1,0 +1,9 @@
+1.protoc --go-grpc_out=./  *.proto
+2.protoc --proto_path=./ --go_out=:./  *.proto
+3.protoc --proto_path=./ --go_out=:./ --go-grpc_out=./  *.proto
+
+protoc --proto_path=./grpc/pb --go_out=module=github.com/uncleyeung/yeung-go-study/grpc/pb:grpc/pb  --go-grpc_out=module=github.com/uncleyeung/yeung-go-study/grpc/pb:grpc/pb  ./grpc/pb/*.proto
+--proto_path :proto路径
+--go-grpc_out：grpc输出的路径
+--go_out：pb的go文件输出的路径
+module：标记当前的gomod路径和pb中的go_package共同使用

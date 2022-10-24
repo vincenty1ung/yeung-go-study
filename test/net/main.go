@@ -13,8 +13,25 @@ import (
 var (
 	ip1 = net.ParseIP("216.14.49.184")
 	ip2 = net.ParseIP("216.14.49.191")
+	ip3 = net.ParseIP("129.226.3.47")
+	ip4 = net.ParseIP("183.3.234.100")
+	ip5 = net.ParseIP("101.32.104.41")
 )
 
+// WeChat  80419 vincent   53u     IPv4 0x5a3ec10a3316914f        0t0                 TCP 198.18.0.1:60073->129.226.3.47:http (CLOSED)
+// WeChat  80419 vincent   54u     IPv4 0x5a3ec10a3319914f        0t0                 TCP 198.18.0.1:64203->183.3.234.100:http (CLOSED)
+// WeChat  80419 vincent   60u     IPv4 0x5a3ec10a3284514f        0t0                 TCP 198.18.0.1:60075->101.32.104.41:http (CLOSED)
+// WeChat  80419 vincent   63u     IPv4 0x5a3ec10a32845bdf        0t0                 TCP 198.18.0.1:60077->101.32.104.41:http (CLOSED)
+// WeChat  80419 vincent  198u     IPv4 0x5a3ec10a331b46bf        0t0                 TCP *:19661 (LISTEN)
+// WeChat  80419 vincent  222u     IPv4 0x5a3ec10a32ad670f        0t0                 TCP 198.18.0.1:61703->101.32.104.41:http (CLOSED)
+// WeChat  80419 vincent  227u     IPv4 0x5a3ec10a31f086bf        0t0                 TCP 198.18.0.1:49870->120.241.21.113:http (CLOSED)
+// WeChat  80419 vincent  246u     IPv4 0x5a3ec10a331cc6bf        0t0                 TCP 192.168.10.5:63215->101.32.104.4:https (ESTABLISHED)
+// WeChat  80419 vincent  248u     IPv4 0x5a3ec10a327af19f        0t0                 TCP 198.18.0.1:50788->198.18.2.243:http (CLOSED)
+// WeChat  80419 vincent  252u     IPv4 0x5a3ec10a3277914f        0t0                 TCP 198.18.0.1:50792->198.18.2.243:http (CLOSED)
+// WeChat  80419 vincent  258u     IPv4 0x5a3ec10a32783c2f        0t0                 TCP 198.18.0.1:50793->198.18.2.243:http (CLOSED)
+// WeChat  80419 vincent  262u     IPv4 0x5a3ec10a31f1514f        0t0                 TCP 198.18.0.1:50802->129.226.3.47:http (CLOSED)
+// WeChat  80419 vincent  272u     IPv4 0x5a3ec10a327b06bf        0t0                 TCP 198.18.0.1:50804->129.226.3.47:http (CLOSED)
+// WeChat  80419 vincent  274u     IPv4 0x5a3ec10a32adbc2f        0t0                 TCP 198.18.0.1:50806->129.226.3.47:http (CLOSED)
 func check(ip string) bool {
 	trial := net.ParseIP(ip)
 	if trial.To4() == nil {
@@ -79,7 +96,10 @@ func main() {
 	GeoDbGetInfo("216.14.49.185")
 	GeoDbGetInfo("216.14.59.185")
 	GeoDbGetInfo("156.249.14.100")
-
+	fmt.Println("===========")
+	GeoDbGetInfo(ip3.String())
+	GeoDbGetInfo(ip4.String())
+	GeoDbGetInfo(ip5.String())
 	mens := make([]man, 0, 10)
 	mens = append(
 		mens, man{

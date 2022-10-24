@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-	"web-test/leet"
 
 	"github.com/astaxie/beego/logs"
+	"github.com/uncleyeung/yeung-go-study/leet"
 )
 
 // 创建log
@@ -77,8 +77,8 @@ func logHandler() {
 }
 
 /*
-	1.创建自定义的handler
-	定义一个结构体，并且去实现http.handler接口
+1.创建自定义的handler
+定义一个结构体，并且去实现http.handler接口
 */
 type HtmlHandler struct {
 }
@@ -103,7 +103,7 @@ func (htmlHandler *HtmlHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 }
 
 /*
-	2.创建handler处理器
+2.创建handler处理器
 */
 func hello(w http.ResponseWriter, r *http.Request) {
 	// 声明响应的数据为html
@@ -125,7 +125,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 }
 
 /*
-	3.函数式范式
+3.函数式范式
 */
 func middlewareHandler(next http.Handler) http.Handler {
 	return http.HandlerFunc(

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"syscall"
+	"time"
 )
 
 func main() {
@@ -66,7 +67,7 @@ func main() {
 	// works := MultimediaMusicWorks{}
 	_, _ = newMultimediaMusicWorksDao().Insert(new(MultimediaMusicWorks))
 	get := newMultimediaMusicWorksDao().Get(1)
-	get.name = "aaa"
+	get.name = "dasdsad"
 	// /works := get.(*MultimediaMusicWorks)
 	fmt.Println(get)
 
@@ -74,13 +75,15 @@ func main() {
 	_, _ = multimediaMusicWorksDao2.Insert(new(MultimediaMusicWorks))
 	t := multimediaMusicWorksDao2.Get(1)
 	t.name = "asd"
+	t.name = "dasdasd"
 	fmt.Println(t)
 	_, err := multimediaMusicWorksDao2.Update(new(MultimediaMusicWorks))
 	if err != nil {
 		return
 	}
 	multimediaMusicWorksDao2.Delete(1)
-
+	fmt.Printf("multimediaMusicWorksnewMultimediaMusicWorksDao2.Delete(1): %v\n", multimediaMusicWorksDao2.Delete(1))
+	multimediaMusicWorksDao2.Insert(new(MultimediaMusicWorks))
 	// CSVProcessor实现了接口 DataProcessor[string] ，所以可赋值
 	processor := newDataProcessor()
 	processor.Process("name,age\nbob,12\njack,30")
@@ -91,6 +94,10 @@ func main() {
 	fmt.Println(err)
 	getgid := syscall.Getgid()
 	fmt.Println(getgid)
+	t2 := time.Now()
+	lastTime := t2.AddDate(0, 0, 1)
+	fmt.Println(lastTime)
+
 }
 
 // any func
@@ -315,7 +322,7 @@ func (s StringReadWriter) Write(p []byte) (n int, err error) {
 	return 0, err
 }
 
-//  类型BytesReadWriter 没有实现接口 Readwriter
+// 类型BytesReadWriter 没有实现接口 Readwriter
 type BytesReadWriter []byte
 
 func (s BytesReadWriter) Read(p []byte) (n int, err error) {
@@ -386,10 +393,12 @@ type JsonProcessor struct {
 	Data any
 }
 
-/*func newJsonProcessor() DataProcessor2[string] {
-	var processor DataProcessor2[string] = JsonProcessor{}
-	return processor
-}*/
+/*
+	func newJsonProcessor() DataProcessor2[string] {
+		var processor DataProcessor2[string] = JsonProcessor{}
+		return processor
+	}
+*/
 func (c JsonProcessor) Process(oriData string) (newData string) {
 	return ""
 }
