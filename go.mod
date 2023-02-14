@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	fyne.io/fyne/v2 v2.2.3
-	github.com/astaxie/beego v1.12.0
+	github.com/astaxie/beego v1.12.2
 	github.com/fatih/structs v1.1.0
 	github.com/json-iterator/go v1.1.12
 	github.com/oschwald/geoip2-golang v1.7.0
