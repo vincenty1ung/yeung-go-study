@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"testing"
+	"time"
 )
 
 var aesBlock cipher.Block
@@ -37,6 +38,18 @@ func TestAesECBDecrypt(t *testing.T) {
 		t.Error(err)
 	}
 	fmt.Printf("%s\n", b)
+
+	str := "2022-01-01 00:04:05"
+
+	timeLayout := "2006-01-02 15:04:05"
+	parse, _ := time.ParseInLocation(timeLayout, str, time.Local)
+	now := time.Now()
+	fmt.Println(now.Day())
+	fmt.Println(parse.Day())
+	fmt.Println(now.Day() - parse.Day())
+	fmt.Println(now.Sub(parse).String())
+	parseDuration, _ := time.ParseDuration("7288h52m37.108883s")
+	fmt.Println(parseDuration.Hours())
 }
 
 /*

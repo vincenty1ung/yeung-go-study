@@ -79,7 +79,7 @@ func GetCurrentZeroTime() time.Time {
 }
 
 func main() {
-	fmt.Println(GetCurrentTime2TomorrowSubUnix())
+	/*fmt.Println(GetCurrentTime2TomorrowSubUnix())
 	fmt.Println(GetCurrentZeroTime())
 	fmt.Println(GetPreDayTime())
 	fmt.Println(GetTime2ZeroTime(GetPreDayTime()))
@@ -98,6 +98,64 @@ func main() {
 	// fmt.Println(timeD / oneDay)
 
 	duration := time.Duration(443 * time.Second)
-	fmt.Println(duration.String())
+	fmt.Println(duration.String())*/
+	int64s := make([]int64, 0, 0)
+	int64s = append(int64s, 0, 0, 1, 0, 3, 2)
+	conve(int64s)
 
+	var a *name
+	var namea nameAble
+	var nameb nameAble = (*name)(nil)
+	namea = a
+	fmt.Println(a)
+	fmt.Println(namea)
+	fmt.Println(nameb)
+	fmt.Println(a == namea)
+	// nameb.name()
+	// namea.name()
+	defer func() {
+		fmt.Println(1)
+	}()
+	defer add(3 + 4)
+	defer add(5 + 6)
+	defer func() {
+		fmt.Println(2)
+	}()
+
+}
+func add(c int) {
+	fmt.Println(c)
+}
+
+var _ nameAble = (*name)(nil)
+
+// var _ nameAble = *name
+var _ nameAble = name{}
+
+type name struct {
+}
+
+func (receiver name) name() {
+
+}
+
+type nameAble interface {
+	name()
+}
+
+func conve(nums []int64) {
+	right := 0
+	left := 0
+
+	for left < len(nums) {
+		if nums[left] != 0 {
+			tmp := nums[left]
+			nums[left] = nums[right]
+			nums[right] = tmp
+			right++
+		}
+		left++
+	}
+
+	fmt.Println(nums)
 }

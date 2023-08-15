@@ -5,10 +5,13 @@ go 1.21.0
 require (
 	fyne.io/fyne/v2 v2.2.3
 	github.com/astaxie/beego v1.12.0
+	github.com/bgentry/speakeasy v0.1.0
 	github.com/fatih/structs v1.1.0
 	github.com/go-redis/redis/v8 v8.11.5
+	github.com/gofrs/uuid/v5 v5.0.0
 	github.com/json-iterator/go v1.1.12
 	github.com/oschwald/geoip2-golang v1.7.0
+	github.com/pkg/errors v0.9.1
 	github.com/shirou/gopsutil v3.21.9+incompatible
 	github.com/tal-tech/go-zero v1.2.1
 	go.etcd.io/etcd/client/v3 v3.5.4
@@ -36,7 +39,6 @@ require (
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-redis/redis v6.15.7+incompatible // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
-	github.com/gofrs/uuid/v5 v5.0.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/goki/freetype v0.0.0-20181231101311-fa8a33aabaff // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -54,7 +56,7 @@ require (
 	github.com/tevino/abool v1.2.0 // indirect
 	github.com/tklauser/go-sysconf v0.3.9 // indirect
 	github.com/tklauser/numcpus v0.3.0 // indirect
-	github.com/yuin/goldmark v1.4.0 // indirect
+	github.com/yuin/goldmark v1.4.13 // indirect
 	go.etcd.io/etcd/api/v3 v3.5.4 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.4 // indirect
 	go.opentelemetry.io/otel v1.0.0-RC2 // indirect
@@ -65,7 +67,7 @@ require (
 	golang.org/x/image v0.0.0-20220601225756-64ec528b34cd // indirect
 	golang.org/x/mobile v0.0.0-20211207041440-4e6c2922fdee // indirect
 	golang.org/x/net v0.0.0-20220812174116-3211cb980234 // indirect
-	golang.org/x/sys v0.0.0-20220818161305-2296e01440c6 // indirect
+	golang.org/x/sys v0.0.0-20220908164124-27713097b956 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/genproto v0.0.0-20220819174105-e9f053255caa // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
