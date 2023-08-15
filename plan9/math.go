@@ -17,6 +17,7 @@ func mul(a, b int) int // 汇编函数声明
 func main() {
 	sub, i := addSub(333, 222)
 	fmt.Println(sub, i)
+	fmt.Println(mul(1, 2))
 
 }
 

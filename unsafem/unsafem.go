@@ -5,8 +5,6 @@ import (
 	"reflect"
 	"time"
 	"unsafe"
-	"web-test/unsafem/empty1"
-	"web-test/unsafem/empty2"
 )
 
 type Human struct {
@@ -46,9 +44,9 @@ test:
 	fmt.Println("333")
 	fmt.Println("========")
 	now := time.Now()
-	bytes := unsafeFastStringToReadOnlyBytes("a")
+	bytes := unsafeFastStringToReadOnlyBytes1("a")
 	fmt.Println(bytes, len(bytes), cap(bytes))
-	onlyString := unsafeFastBytesToReadOnlyString([]byte{98, 123})
+	onlyString := unsafeFastBytesToReadOnlyString1([]byte{98, 123})
 	fmt.Println(onlyString, len(onlyString))
 	fmt.Println(time.Since(now))
 
@@ -111,14 +109,14 @@ test:
 
 	// fmt.Println(reflect.DeepEqual(empty1.Tempty1Var,empty2.Tempty2Var))
 
-	fmt.Println(
-		unsafe.Pointer(&empty1.Tempty1Var),
-		unsafe.Pointer(uintptr(unsafe.Pointer(&empty1.Tempty1Var))+uintptr(unsafe.Sizeof(empty1.Tempty1Var))),
-	)
-	fmt.Println(
-		unsafe.Pointer(&empty2.Tempty2Var),
-		unsafe.Pointer(uintptr(unsafe.Pointer(&empty2.Tempty2Var))+unsafe.Sizeof(empty2.Tempty2Var)),
-	)
+	bytes = []byte("dasd")
+	fmt.Println(toString(bytes))
+	fmt.Println(unsafe.String(&bytes[0], len(bytes)))
+
+	s = "abc"
+	buf := unsafe.Slice(unsafe.StringData(s), len(s))
+	fmt.Println(buf)
+	fmt.Println(*unsafe.StringData(s))
 
 }
 
@@ -135,6 +133,15 @@ func Test1() {
 		fmt.Printf("%d ", body[i])
 	}
 }
+
+func toString(b []byte) string {
+	if len(b) == 0 {
+		return ""
+	}
+	return unsafe.String(&b[0], len(b))
+}
+
+/*
 func Test2() {
 	h := Human{
 		true,
@@ -194,7 +201,7 @@ func Test2() {
 		s2.handler()
 	}
 
-}
+}*/
 
 func unsafeFastStringToReadOnlyBytes(s string) []byte {
 	sh := (*reflect.StringHeader)(unsafe.Pointer(&s))
@@ -208,6 +215,14 @@ func unsafeFastBytesToReadOnlyString(b []byte) string {
 		Len:  sh.Len,
 	}
 	return *(*string)(unsafe.Pointer(&header))
+}
+
+func unsafeFastStringToReadOnlyBytes1(s string) []byte {
+	unsafeData := unsafe.StringData(s)
+	return unsafe.Slice(unsafeData, len(s))
+}
+func unsafeFastBytesToReadOnlyString1(b []byte) string {
+	return unsafe.String(&b[0], len(b))
 }
 
 // BytesToString converts byte slice to string.

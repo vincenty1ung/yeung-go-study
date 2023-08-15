@@ -1,12 +1,16 @@
 package main
 
 import (
+	"cmp"
 	"fmt"
-	"syscall"
-	"time"
+	"log/slog"
+	"os"
+	"slices"
+	"sort"
 )
 
 func main() {
+	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, nil)))
 	returnAny := addReturnAny(12, 13)
 	fmt.Println(returnAny)
 	num := returnAny.(int64)
@@ -61,11 +65,72 @@ func main() {
 	gm.Able[123] = "123"
 	gm.Able[125] = "125"
 	fmt.Println(gm)
+
+	seq := []int{1, 2, 1, 2, 2, 3, 5, 8, 8}
+	seq = slices.Compact(seq)
+	fmt.Println(seq)
+	fmt.Println(fmt.Sprintf("%p", seq))
+	fmt.Println("++++++++++=")
+	seq = slices.Clone(seq)
+	fmt.Println(fmt.Sprintf("%p", seq))
+	fmt.Println(seq)
+
+	names := []string{"xili", "Bob", "sss", "yanbo"}
+	n, found := slices.BinarySearch(names, "yanbo")
+	fmt.Println("Vera:", n, found)
+
+	humans := []Human{
+		{name: "xili", age: 12}, {name: "yangbo", age: 12}, {name: "chenfeng", age: 12}, {name: "huangyongyi", age: 12},
+	}
+	sort.Slice(
+		humans, func(i, j int) bool {
+			return humans[i].name > humans[j].name
+		},
+	)
+	slices.SortFunc(
+		humans, func(a, b Human) int {
+			return cmp.Compare(a.name, b.name)
+		},
+	)
+	// BinarySearchFunc 必须是有序的
+	index, found := slices.BinarySearchFunc(
+		humans, "yangbo", func(human Human, s string) int {
+			return cmp.Compare(human.name, s)
+		},
+	)
+	fmt.Println("yangbo:", index, found)
+	fmt.Println(cmp.Compare("ba", "ba"))
+	fmt.Println(rune('a'), 'b')
+	humans = append(
+		humans, Human{
+			"11", 12,
+		},
+	)
+	fmt.Println(cap(humans))
+	fmt.Println(humans)
+	humans = slices.Grow(humans, 12)
+	slog.Info("当前数组的:", slog.Int("长度", len(humans)), slog.Int("宽度", cap(humans)))
+	slog.Error("当前数组的:", slog.Any("err", error(nil)))
+
+	slog.Info("大小:", slog.Int("小", min(1, 1, 2, 3, 1-4, -4, -21, 690)))
+	slog.Info("大小:", slog.Int("大", max(-23, 1, 2, 3, 1-4, -4, -21, 690)))
+
+	var list Humans
+	list = humans
+	slog.Info("当前数组的:", slog.Int("长度", len(list)), slog.Int("宽度", cap(list)), slog.Any("con", list))
+	fmt.Println(list)
+	clear(list)
+
+	slog.Info("list数组的:", slog.Int("长度", len(list)), slog.Int("宽度", cap(list)), slog.Any("con", list))
+	fmt.Println(list)
+	slog.Info("humans数组的:", slog.Int("长度", len(humans)), slog.Int("宽度", cap(humans)), slog.Any("con", humans))
+	fmt.Println(humans)
+
 	// newMultimediaMusicWorksDao := newMultimediaMusicWorksDao()
 	// var dao MultimediaMusicWorksDao[*MultimediaMusicWorks]
 	// dao = newMultimediaMusicWorksDao()
 	// works := MultimediaMusicWorks{}
-	_, _ = newMultimediaMusicWorksDao().Insert(new(MultimediaMusicWorks))
+	/*_, _ = newMultimediaMusicWorksDao().Insert(new(MultimediaMusicWorks))
 	get := newMultimediaMusicWorksDao().Get(1)
 	get.name = "dasdsad"
 	// /works := get.(*MultimediaMusicWorks)
@@ -96,8 +161,19 @@ func main() {
 	fmt.Println(getgid)
 	t2 := time.Now()
 	lastTime := t2.AddDate(0, 0, 1)
-	fmt.Println(lastTime)
+	fmt.Println(lastTime)*/
 
+}
+
+type Humans []Human
+
+type Human struct {
+	name string
+	age  uint8
+}
+
+func (h *Human) String() string {
+	return fmt.Sprintf("Human %s ", h.name)
 }
 
 // any func
@@ -449,4 +525,55 @@ type Float interface {
 }
 type Strings interface {
 	~string | ~rune
+}
+
+func binarySearch(humans Humans, key string) (bool, Human) {
+	/*sort.Slice(
+		humans, func(i, j int) bool {
+			return humans[i].name > humans[j].name
+		},
+	)*/
+	slices.SortFunc(
+		humans, func(a, b Human) int {
+			return cmp.Compare(a.name, b.name)
+		},
+	)
+	// BinarySearchFunc 必须是有序的
+	index, ok := slices.BinarySearchFunc(
+		humans, key, func(human Human, s string) int {
+			return cmp.Compare(human.name, s)
+		},
+	)
+	// fmt.Println("yangbo:", index, found)
+	return ok, humans[index]
+}
+func mapSearch(list Humans, key string) (bool, Human) {
+	var listSearchMap map[string]Human
+	// var one sync.Once
+	/*sync.OnceFunc(
+		func() {
+
+		},
+	)()*/
+	/*one.Do(
+		func() {
+			listSearchMap = make(map[string]Human, len(list))
+			for i := range list {
+				if _, ok := listSearchMap[list[i].name]; !ok {
+					listSearchMap[list[i].name] = list[i]
+				}
+			}
+		},
+	)*/
+
+	listSearchMap = make(map[string]Human, len(list))
+	for i := range list {
+		if _, ok := listSearchMap[list[i].name]; !ok {
+			listSearchMap[list[i].name] = list[i]
+		}
+	}
+
+	v, ok := listSearchMap[key]
+	// fmt.Println("yangbo:", human, ok)
+	return ok, v
 }

@@ -15,7 +15,8 @@ func main() {
 	lists.add(
 		a2,
 	)
-
+	// max(1,2)
+	fmt.Println(max(111, 2, 3, 3, 3, 2, 2, 2, 3, 5, 4, 6, 7, 23, -1))
 	go func() {
 		// for  {
 		able3 := newAlbe3(

@@ -5,10 +5,12 @@ import (
 	"fmt"
 )
 
-/*type s struct {
-	A string `json:"a"`
-	B string `json:"b"`
-}*/
+/*
+	type s struct {
+		A string `json:"a"`
+		B string `json:"b"`
+	}
+*/
 type s struct {
 	A string
 	B string
