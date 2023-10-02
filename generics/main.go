@@ -80,22 +80,22 @@ func main() {
 	fmt.Println("Vera:", n, found)
 
 	humans := []Human{
-		{name: "xili", age: 12}, {name: "yangbo", age: 12}, {name: "chenfeng", age: 12}, {name: "huangyongyi", age: 12},
+		{Name: "xili", Age: 12}, {Name: "yangbo", Age: 12}, {Name: "chenfeng", Age: 12}, {Name: "huangyongyi", Age: 12},
 	}
 	sort.Slice(
 		humans, func(i, j int) bool {
-			return humans[i].name > humans[j].name
+			return humans[i].Name > humans[j].Name
 		},
 	)
 	slices.SortFunc(
 		humans, func(a, b Human) int {
-			return cmp.Compare(a.name, b.name)
+			return cmp.Compare(a.Name, b.Name)
 		},
 	)
 	// BinarySearchFunc 必须是有序的
 	index, found := slices.BinarySearchFunc(
 		humans, "yangbo", func(human Human, s string) int {
-			return cmp.Compare(human.name, s)
+			return cmp.Compare(human.Name, s)
 		},
 	)
 	fmt.Println("yangbo:", index, found)
@@ -168,12 +168,12 @@ func main() {
 type Humans []Human
 
 type Human struct {
-	name string
-	age  uint8
+	Name string `json:"name"`
+	Age  uint8  `json:"age"`
 }
 
 func (h *Human) String() string {
-	return fmt.Sprintf("Human %s ", h.name)
+	return fmt.Sprintf("Human %s ", h.Name)
 }
 
 // any func
@@ -535,13 +535,13 @@ func binarySearch(humans Humans, key string) (bool, Human) {
 	)*/
 	slices.SortFunc(
 		humans, func(a, b Human) int {
-			return cmp.Compare(a.name, b.name)
+			return cmp.Compare(a.Name, b.Name)
 		},
 	)
 	// BinarySearchFunc 必须是有序的
 	index, ok := slices.BinarySearchFunc(
 		humans, key, func(human Human, s string) int {
-			return cmp.Compare(human.name, s)
+			return cmp.Compare(human.Name, s)
 		},
 	)
 	// fmt.Println("yangbo:", index, found)
@@ -568,8 +568,8 @@ func mapSearch(list Humans, key string) (bool, Human) {
 
 	listSearchMap = make(map[string]Human, len(list))
 	for i := range list {
-		if _, ok := listSearchMap[list[i].name]; !ok {
-			listSearchMap[list[i].name] = list[i]
+		if _, ok := listSearchMap[list[i].Name]; !ok {
+			listSearchMap[list[i].Name] = list[i]
 		}
 	}
 
