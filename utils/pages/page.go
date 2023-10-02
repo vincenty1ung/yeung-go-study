@@ -15,20 +15,23 @@ type PageInfo[T any] struct {
 	Total    uint64 `json:"total"`
 }
 
-func NewPageInfoByDataList[T any](source []T) *PageInfo[T] {
+func NewPageInfoForSource[T any](source []T) *PageInfo[T] {
 	return &PageInfo[T]{
 		source: source,
 	}
 }
+func (m *PageInfo[T]) CopyDataList2Source() {
+	if m != nil && m.source != nil {
+		m.DataList = m.source[:len(m.source)]
+		m.Total = uint64(len(m.source))
+	}
+}
 
-// ConvertMemoryPaginatedDataByPagNumAndSize 转换内存分页数据(Convert paginated data)
-func (m *PageInfo[T]) ConvertMemoryPaginatedDataByPagNumAndSize(pageNumArg, pageSizeArg uint64) {
+// BuildMemoryPageDataListForSource 转换内存分页数据(Convert paginated data)
+func (m *PageInfo[T]) BuildMemoryPageDataListForSource(pageNumArg, pageSizeArg uint64) {
 	m.checkPagNumAndSize(&pageNumArg, &pageSizeArg)
-	pageNum, pageSize, offset, total, pageMax, limit := m.paginatedData(pageNumArg, pageSizeArg)
-	m.Pages = pageMax
-	m.Total = total
-	m.PageNum = pageNum
-	m.PageSize = pageSize
+	var offset, limit uint64
+	m.PageNum, m.PageSize, offset, m.Total, m.Pages, limit = m.paginatedData(pageNumArg, pageSizeArg)
 	m.DataList = m.source[offset : offset+limit]
 }
 
@@ -43,23 +46,16 @@ func (m *PageInfo[T]) checkPagNumAndSize(pageNumArg, pageSizeArg *uint64) {
 func (m *PageInfo[T]) paginatedData(pageNumArg, pageSizeArg uint64) (pageNum, pageSize, offset, total, pageMax, limit uint64) {
 	pageNum, pageSize = pageNumArg, pageSizeArg
 	total = uint64(len(m.source))
+	limit = pageSize
 	if total%pageSizeArg == 0 {
 		pageMax = total / pageSizeArg
 	} else {
 		pageMax = total/pageSizeArg + 1
 	}
-	// 当前页合法性检查
-	if pageNumArg > pageMax {
-		pageNum, pageNumArg = pageMax, pageMax
+	if defaultZero < pageMax && pageNum > pageMax {
+		pageNum = pageMax
 	}
-	// 越界超精度判断
-	if offset = pageSizeArg * (pageNumArg - 1); offset >= total {
-		offset = 0
-		pageNum = 1
-	}
-	// 越界检测
-	limit = pageSize
-	if offset+pageSize > total {
+	if offset = pageSize * (pageNum - 1); offset+pageSize > total {
 		limit = total - offset
 	}
 	return

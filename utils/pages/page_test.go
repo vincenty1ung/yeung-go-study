@@ -7,12 +7,12 @@ import (
 )
 
 func TestNewPageInfoByDataListGenerics(t *testing.T) {
-	p1 := NewPageInfoByDataList(
+	p1 := NewPageInfoForSource(
 		[]string{
 			"string1", "string2",
 		},
 	)
-	p2 := NewPageInfoByDataList(
+	p2 := NewPageInfoForSource(
 		[]name{
 			{
 				"name1",
@@ -38,8 +38,8 @@ func TestNewPageInfoByDataList(t *testing.T) {
 		{Name: "9", Age: 0}, {Name: "10", Age: 0}, {Name: "11", Age: 0}, {Name: "12", Age: 0},
 	}
 	// 超过size
-	list := NewPageInfoByDataList(hums)
-	list.ConvertMemoryPaginatedDataByPagNumAndSize(1, 50)
+	list := NewPageInfoForSource(hums)
+	list.BuildMemoryPageDataListForSource(1, 50)
 	marshal, err := json.Marshal(list)
 	if err != nil {
 		fmt.Println(err)
@@ -47,8 +47,8 @@ func TestNewPageInfoByDataList(t *testing.T) {
 	fmt.Println(string(marshal))
 	fmt.Println(string("===========1==========="))
 
-	list = NewPageInfoByDataList(hums)
-	list.ConvertMemoryPaginatedDataByPagNumAndSize(2, 50)
+	list = NewPageInfoForSource(hums)
+	list.BuildMemoryPageDataListForSource(2, 50)
 	marshal, err = json.Marshal(list)
 	if err != nil {
 		fmt.Println(err)
@@ -57,8 +57,8 @@ func TestNewPageInfoByDataList(t *testing.T) {
 	fmt.Println(string("===========2==========="))
 
 	// 超过pageNum
-	list = NewPageInfoByDataList(hums)
-	list.ConvertMemoryPaginatedDataByPagNumAndSize(1, 3)
+	list = NewPageInfoForSource(hums)
+	list.BuildMemoryPageDataListForSource(1, 3)
 	marshal, err = json.Marshal(list)
 	if err != nil {
 		fmt.Println(err)
@@ -66,8 +66,8 @@ func TestNewPageInfoByDataList(t *testing.T) {
 	fmt.Println(string(marshal))
 	fmt.Println(string("============3=========="))
 
-	list = NewPageInfoByDataList(hums)
-	list.ConvertMemoryPaginatedDataByPagNumAndSize(2, 3)
+	list = NewPageInfoForSource(hums)
+	list.BuildMemoryPageDataListForSource(2, 3)
 	marshal, err = json.Marshal(list)
 	if err != nil {
 		fmt.Println(err)
@@ -75,8 +75,8 @@ func TestNewPageInfoByDataList(t *testing.T) {
 	fmt.Println(string(marshal))
 	fmt.Println(string("=============4========="))
 
-	list = NewPageInfoByDataList(hums)
-	list.ConvertMemoryPaginatedDataByPagNumAndSize(3, 3)
+	list = NewPageInfoForSource(hums)
+	list.BuildMemoryPageDataListForSource(3, 3)
 	marshal, err = json.Marshal(list)
 	if err != nil {
 		fmt.Println(err)
@@ -84,8 +84,8 @@ func TestNewPageInfoByDataList(t *testing.T) {
 	fmt.Println(string(marshal))
 	fmt.Println(string("==========5============"))
 
-	list = NewPageInfoByDataList(hums)
-	list.ConvertMemoryPaginatedDataByPagNumAndSize(4, 3)
+	list = NewPageInfoForSource(hums)
+	list.BuildMemoryPageDataListForSource(4, 3)
 	marshal, err = json.Marshal(list)
 	if err != nil {
 		fmt.Println(err)
@@ -93,8 +93,8 @@ func TestNewPageInfoByDataList(t *testing.T) {
 	fmt.Println(string(marshal))
 	fmt.Println(string("==========6============"))
 
-	list = NewPageInfoByDataList(hums)
-	list.ConvertMemoryPaginatedDataByPagNumAndSize(5, 3)
+	list = NewPageInfoForSource(hums)
+	list.BuildMemoryPageDataListForSource(5, 3)
 	marshal, err = json.Marshal(list)
 	if err != nil {
 		fmt.Println(err)
@@ -103,8 +103,8 @@ func TestNewPageInfoByDataList(t *testing.T) {
 	fmt.Println(string("===========7==========="))
 
 	// 0对象
-	list = NewPageInfoByDataList[Human](make([]Human, 0))
-	list.ConvertMemoryPaginatedDataByPagNumAndSize(1, 50)
+	list = NewPageInfoForSource[Human](make([]Human, 0))
+	list.BuildMemoryPageDataListForSource(1, 50)
 	marshal, err = json.Marshal(list)
 	if err != nil {
 		fmt.Println(err)
@@ -150,8 +150,8 @@ func TestNewPageInfoByDataList(t *testing.T) {
 			"phone": "176",
 		},
 	}
-	list1 := NewPageInfoByDataList[map[string]any](maps)
-	list1.ConvertMemoryPaginatedDataByPagNumAndSize(3, 2)
+	list1 := NewPageInfoForSource[map[string]any](maps)
+	list1.BuildMemoryPageDataListForSource(4, 3)
 	marshal, err = json.Marshal(list1)
 	if err != nil {
 		fmt.Println(err)
@@ -159,6 +159,24 @@ func TestNewPageInfoByDataList(t *testing.T) {
 	fmt.Println(string(marshal))
 	fmt.Println(string("===========maps==========="))
 
+	list2 := NewPageInfoForSource[map[string]any](maps)
+	marshal, err = json.Marshal(list2)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(string(marshal))
+	list2.CopyDataList2Source()
+	marshal, err = json.Marshal(list2)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(string(marshal))
+
+	for _, m := range list2.DataList {
+		for _, _ = range m {
+		}
+	}
+	fmt.Println(string("===========maps==========="))
 }
 
 type name struct {
