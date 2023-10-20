@@ -1,5 +1,12 @@
 package pages
 
+import (
+	"context"
+
+	"github.com/Masterminds/squirrel"
+	"github.com/zeromicro/go-zero/core/stores/sqlc"
+)
+
 const (
 	defaultZero     = 0
 	defaultPageNum  = 1
@@ -20,6 +27,11 @@ func NewPageInfoForSource[T any](source []T) *PageInfo[T] {
 		source: source,
 	}
 }
+
+func NewPageInfo[T any]() *PageInfo[T] {
+	return &PageInfo[T]{}
+}
+
 func (m *PageInfo[T]) CopyDataList2Source() {
 	if m != nil && m.source != nil {
 		m.DataList = m.source[:len(m.source)]
@@ -59,4 +71,51 @@ func (m *PageInfo[T]) paginatedData(pageNumArg, pageSizeArg uint64) (pageNum, pa
 		limit = total - offset
 	}
 	return
+}
+
+func (m *PageInfo[T]) FindByPageArgAndQuery(
+	ctx context.Context, pageNum, pageSize uint64, countBuilder, queryBuilder squirrel.SelectBuilder,
+	conn sqlc.CachedConn,
+) error {
+	m.checkPagNumAndSize(&pageSize, &pageSize)
+	var (
+		resp  []T
+		count uint64
+	)
+	countQuery, values, err := countBuilder.ToSql()
+	if err != nil {
+		return err
+	}
+	err = conn.QueryRowNoCacheCtx(ctx, &count, countQuery, values...)
+	if err != nil {
+		return err
+	}
+	offset := pageSize * (pageNum - 1)
+	queryBuilder = queryBuilder.Limit(pageSize).Offset(offset)
+	query, values, err := queryBuilder.ToSql()
+	if err != nil {
+		return err
+	}
+	err = conn.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
+	if err != nil {
+		return err
+	}
+
+	m.Pages = m.pagesNum(count, pageSize)
+	m.Total = count
+	m.PageNum = pageNum
+	m.PageSize = pageSize
+	m.DataList = resp
+	return nil
+}
+
+func (m *PageInfo[T]) pagesNum(count uint64, pageSize uint64) uint64 {
+	// 计算最大页
+	var pages uint64
+	if count%pageSize == 0 {
+		pages = count / pageSize
+	} else {
+		pages = count/pageSize + 1
+	}
+	return pages
 }
