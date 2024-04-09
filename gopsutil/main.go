@@ -38,7 +38,7 @@ func main() {
 	}
 	for _, pv := range withContext {
 		n, err := pv.Name()
-		// fmt.Println(n)
+		fmt.Println(n)
 		if err == nil && n == "etcd" {
 			fmt.Println(fmt.Sprintf("LosslessSwitcher Pid:%d", pv.Pid))
 			username, _ := pv.Username()
