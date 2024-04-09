@@ -70,7 +70,7 @@ func main() {
 			iOCounters, _ := pv.IOCounters()
 			fmt.Println(
 				fmt.Sprintf(
-					"iOCounters：读取总数【%d】，写入总数【%d】，读取量【%dMB】，写入量【%d】，", iOCounters.ReadBytes,
+					"iOCounters：读取总数【%d】，写入总数【%d】，读取量【%dMB】，写入量【%dMB】，", iOCounters.ReadBytes,
 					iOCounters.WriteCount, iOCounters.ReadBytes/mbInt, iOCounters.WriteBytes/mbInt,
 				),
 			)
