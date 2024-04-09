@@ -11,7 +11,7 @@ import (
 func main() {
 	fmt.Println("你好")
 
-	_, err := process.NewProcess(27128)
+	_, err := process.NewProcess(1)
 	if err != nil {
 		fmt.Println(err)
 		return
