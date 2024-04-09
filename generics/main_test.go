@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 )
 
@@ -89,4 +90,16 @@ func TestBinarySearch(t *testing.T) {
 	ok, human := binarySearch(humans140, "vincent")
 	fmt.Println(ok)
 	fmt.Println(human)
+}
+
+func TestName1(t *testing.T) {
+	f := float64(9007199254740991)
+	fmt.Println(f)
+	num := 1.79769313486231570814527423731704356798070e+308
+	str := fmt.Sprintf("%f", num)
+	fmt.Println(str)
+
+	str2 := strconv.FormatFloat(num, 'f', -1, 64)
+	fmt.Println(str2)
+
 }

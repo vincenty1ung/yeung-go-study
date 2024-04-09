@@ -8,6 +8,12 @@ import (
 	"time"
 )
 
+const (
+	SampleRate  = 44100
+	BufferSize  = 256
+	NumChannels = 1
+)
+
 func main() {
 	/*atr := int32(11)
 	mnum := test(atr, 0, 1, 2, 3, 4, 5, 6)

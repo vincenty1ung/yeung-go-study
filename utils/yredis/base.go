@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
+
 	"github.com/uncleyeung/yeung-go-study/utils/ylog"
 )
 
@@ -120,25 +121,25 @@ type redisHook struct {
 var _rH redis.Hook = redisHook{}
 
 func (redisHook) BeforeProcess(ctx context.Context, cmd redis.Cmder) (context.Context, error) {
-	fmt.Println("=====redis====")
+	// fmt.Println("=====redis====")
 	withValue := context.WithValue(ctx, redisHookTimeK, time.Now())
-	fmt.Println("你好世界,BeforeProcess")
-	fmt.Println(cmd.String())
+	//fmt.Println("你好世界,BeforeProcess")
+	fmt.Println("BeforeProcess:" + cmd.String())
 	return withValue, nil
 }
 
 func (redisHook) AfterProcess(ctx context.Context, cmd redis.Cmder) error {
-	now := time.Now()
+	//now := time.Now()
 	defer AssertError(cmd.Err())
-	times, ok := ctx.Value(redisHookTimeK).(time.Time)
+	/*times, ok := ctx.Value(redisHookTimeK).(time.Time)
 	if !ok {
 		times = time.Now()
-	}
+	}*/
 	// ulog2.LogRedis(ctx, times, cmd.Name(), cmd.Args())
-	fmt.Println(now.Sub(times))
+	//fmt.Println(now.Sub(times))
 	// ylog.Info("处理时间", zap.Any("时长", now.Sub(times)))
-	fmt.Println("你好世界,AfterProcess")
-	fmt.Println("====redis=====")
+	//fmt.Println("你好世界,AfterProcess")
+	//fmt.Println("====redis=====")
 	return nil
 }
 

@@ -14,9 +14,10 @@ import (
 	redisn "github.com/go-redis/redis/v8"
 	"github.com/gofrs/uuid/v5"
 
+	"go.uber.org/zap"
+
 	"github.com/uncleyeung/yeung-go-study/utils/ylog"
 	"github.com/uncleyeung/yeung-go-study/utils/yredis"
-	"go.uber.org/zap"
 )
 
 func TestLock(t *testing.T) {

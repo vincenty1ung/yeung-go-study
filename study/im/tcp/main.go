@@ -5,6 +5,8 @@ import (
 	"log"
 	"net"
 	"time"
+
+	"github.com/uncleyeung/yeung-go-study/utils/pprof"
 )
 
 type Client struct {
@@ -32,6 +34,7 @@ func main() {
 	}
 
 	// fmt.Println("debug:Server started. Listening on localhost:8000")
+	pprof.Launch()
 
 	go broadcastMessages()
 	go imSend()
