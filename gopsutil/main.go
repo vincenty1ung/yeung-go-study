@@ -39,7 +39,7 @@ func main() {
 	for _, pv := range withContext {
 		n, err := pv.Name()
 		// fmt.Println(n)
-		if err == nil && n == "firefox" {
+		if err == nil && n == "iow" {
 			fmt.Println(fmt.Sprintf("LosslessSwitcher Pid:%d", pv.Pid))
 			username, _ := pv.Username()
 			fmt.Println(username)
