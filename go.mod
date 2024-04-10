@@ -15,6 +15,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/oschwald/geoip2-golang v1.7.0
 	github.com/pion/webrtc/v3 v3.2.23
+	github.com/prometheus/tsdb v0.10.0
 	github.com/shirou/gopsutil v3.21.9+incompatible
 	github.com/shirou/gopsutil/v3 v3.24.3
 	github.com/tal-tech/go-zero v1.2.1
@@ -93,6 +94,7 @@ require (
 	github.com/pion/stun v0.6.1 // indirect
 	github.com/pion/transport/v2 v2.2.4 // indirect
 	github.com/pion/turn/v2 v2.1.4 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
 	github.com/prometheus/client_golang v1.16.0 // indirect
