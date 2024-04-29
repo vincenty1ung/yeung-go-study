@@ -28,7 +28,7 @@ func handleSSE(w http.ResponseWriter, r *http.Request) {
 	// 每秒发送一次数据
 	ticker := time.NewTicker(1 * time.Second)
 	defer ticker.Stop()
-
+	count := 0
 	for {
 		select {
 		case <-notify:
@@ -37,18 +37,25 @@ func handleSSE(w http.ResponseWriter, r *http.Request) {
 			close(stopChan)
 			return
 		case <-ticker.C:
+			if count > 5 {
+				close(stopChan)
+				return
+			}
 			// 向客户端发送新的数据
+			fmt.Fprintf(w, "id: %d\n", time.Now().UnixMilli())
 			fmt.Fprintf(w, "data: %s\n\n", time.Now().Format("15:04:05"))
 			w.(http.Flusher).Flush()
+			count++
 		case <-stopChan:
 			// 停止事件发送
+			fmt.Println("停止事件发送")
 			return
 		}
 	}
 }
 
 func main() {
-	http.HandleFunc("/sse", handleSSE)
+	http.HandleFunc("/events", handleSSE)
 
 	log.Println("Server is running on :8080...")
 	if err := http.ListenAndServe(":8080", nil); err != nil {

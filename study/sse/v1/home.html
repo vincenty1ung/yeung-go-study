@@ -12,7 +12,7 @@
 <script>
     const outputDiv = document.getElementById("output");
     // 指定连接到端口为 8080 的服务
-    const eventSource = new EventSource("http://localhost:8080/sse");
+    const eventSource = new EventSource("http://localhost:8080/events");
 
     eventSource.onmessage = function(event) {
         console.log("Received message:", event.data);
