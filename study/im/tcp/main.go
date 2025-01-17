@@ -6,7 +6,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/uncleyeung/yeung-go-study/utils/pprof"
+	"github.com/vincenty1ung/yeung-go-study/utils/pprof"
 )
 
 type Client struct {

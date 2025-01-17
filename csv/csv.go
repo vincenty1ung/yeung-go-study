@@ -8,8 +8,8 @@ import (
 	"strings"
 	"unsafe"
 
-	"github.com/uncleyeung/yeung-go-study/csv/clan_pb"
-	"github.com/uncleyeung/yeung-go-study/csv/i18n"
+	"github.com/vincenty1ung/yeung-go-study/csv/clan_pb"
+	"github.com/vincenty1ung/yeung-go-study/csv/i18n"
 )
 
 var (
@@ -461,6 +461,7 @@ func WriterCSV(header []string, data interface{}, first bool) []byte {
 	if first {
 		w.Write(head)
 	}
+	strings.Join()
 
 	value := reflect.ValueOf(data)
 	l := value.Len()

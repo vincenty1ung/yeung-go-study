@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/uncleyeung/yeung-go-study/grpc/pb"
+	"github.com/vincenty1ung/yeung-go-study/grpc/pb"
 )
 
 type ManServiceServerImpl struct {

@@ -6,7 +6,8 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/logs"
-	"github.com/uncleyeung/yeung-go-study/study/leedcode/leet"
+
+	"github.com/vincenty1ung/yeung-go-study/study/leedcode/leet"
 )
 
 // 创建log

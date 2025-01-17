@@ -1,8 +1,9 @@
 package main
 
 import (
-	"C"
 	"fmt"
+
+	"C"
 )
 
 //export PrintBye

@@ -7,9 +7,10 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/tal-tech/go-zero/core/stores/kv"
-	"github.com/uncleyeung/yeung-go-study/utils/ylog"
+	"github.com/zeromicro/go-zero/core/stores/kv"
 	"go.uber.org/zap"
+
+	"github.com/vincenty1ung/yeung-go-study/utils/ylog"
 )
 
 const (

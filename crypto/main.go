@@ -7,7 +7,7 @@ import (
 	"flag"
 	"fmt"
 
-	aes2 "github.com/uncleyeung/yeung-go-study/crypto/aes"
+	aes2 "github.com/vincenty1ung/yeung-go-study/crypto/aes"
 )
 
 var (

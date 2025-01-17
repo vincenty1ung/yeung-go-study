@@ -5,7 +5,7 @@ import (
 	"sort"
 	"unsafe"
 
-	"github.com/tal-tech/go-zero/core/fx"
+	"github.com/zeromicro/go-zero/core/fx"
 )
 
 // Slice 线程不安全扩容出现null

@@ -84,8 +84,8 @@ func main() {
 	woman.Age = 32
 	wmt = woman
 
-	//mt.GetType()
-	//wmt.GetType()
+	// mt.GetType()
+	// wmt.GetType()
 
 	hand(mt)
 	hand(wmt)

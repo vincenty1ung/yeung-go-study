@@ -10,9 +10,10 @@ void myprint(char* s) {
 */
 
 import (
-	"C"
 	"fmt"
 	"strconv"
+
+	"C"
 )
 
 type name struct {

@@ -1,6 +1,6 @@
 syntax = "proto3";
 option objc_class_prefix = "PB3";
-option go_package = "github.com/uncleyeung/yeung-go-study/grpc/pb";
+option go_package = "github.com/vincenty1ung/yeung-go-study/grpc/pb";
 package pb;
 
 // 指定输出 go 语言的源码到哪个目录以及文件名称
@@ -11,17 +11,17 @@ package pb;
 // option csharp_package="MyTest";
 
 service ManService{
-  rpc GetMan(GetManRequest) returns (GetManResponse){}
+	rpc GetMan(GetManRequest) returns (GetManResponse){}
 }
 
 // 函数参数
 message GetManRequest{
-  int32  id = 1; //id
-  map<string, string>  man_map = 2; //man_map
-  bytes bytes = 3;//bytes
+	int32  id = 1; //id
+	map<string, string>  man_map = 2; //man_map
+	bytes bytes = 3;//bytes
 }
 
 // 函数返回值
 message GetManResponse{
-  string backJson = 1;
+	string backJson = 1;
 }

@@ -14,13 +14,13 @@
     // 指定连接到端口为 8080 的服务
     const eventSource = new EventSource("http://localhost:8080/events");
 
-    eventSource.onmessage = function(event) {
+    eventSource.onmessage = function (event) {
         console.log("Received message:", event.data);
         // 在页面上更新显示
         outputDiv.innerText = "Received message: " + event.data;
     };
 
-    eventSource.onerror = function(event) {
+    eventSource.onerror = function (event) {
         console.error("Error:", event);
         eventSource.close();
     };

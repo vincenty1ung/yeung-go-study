@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/uncleyeung/yeung-go-study/csv/clan_pb"
-	"github.com/uncleyeung/yeung-go-study/csv/i18n"
+	"github.com/vincenty1ung/yeung-go-study/csv/clan_pb"
+	"github.com/vincenty1ung/yeung-go-study/csv/i18n"
 )
 
 func getMembership(code string, types clan_pb.ClanAdminType) string {

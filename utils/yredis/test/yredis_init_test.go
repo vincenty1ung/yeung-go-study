@@ -3,7 +3,7 @@ package test
 import (
 	"context"
 
-	"github.com/uncleyeung/yeung-go-study/utils/yredis"
+	"github.com/vincenty1ung/yeung-go-study/utils/yredis"
 )
 
 var (

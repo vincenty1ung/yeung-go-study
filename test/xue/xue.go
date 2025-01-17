@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/uncleyeung/yeung-go-study/utils/yredis"
+	"github.com/vincenty1ung/yeung-go-study/utils/yredis"
 )
 
 type T struct {

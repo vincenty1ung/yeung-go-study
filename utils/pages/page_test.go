@@ -173,7 +173,7 @@ func TestNewPageInfoByDataList(t *testing.T) {
 	fmt.Println(string(marshal))
 
 	for _, m := range list2.DataList {
-		for _, _ = range m {
+		for range m {
 		}
 	}
 	fmt.Println(string("===========maps==========="))

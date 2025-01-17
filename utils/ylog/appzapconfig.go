@@ -18,7 +18,7 @@ type appZapLogConf struct {
 	logPath         string
 }
 
-var defaultLogOptions appZapLogConf = appZapLogConf{
+var defaultLogOptions = appZapLogConf{
 	testenv:         true,
 	processName:     path.Base(os.Args[0]),
 	withPid:         true,

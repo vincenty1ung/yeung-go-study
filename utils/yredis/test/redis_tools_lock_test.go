@@ -16,8 +16,8 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/uncleyeung/yeung-go-study/utils/ylog"
-	"github.com/uncleyeung/yeung-go-study/utils/yredis"
+	"github.com/vincenty1ung/yeung-go-study/utils/ylog"
+	"github.com/vincenty1ung/yeung-go-study/utils/yredis"
 )
 
 func TestLock(t *testing.T) {

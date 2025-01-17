@@ -2,15 +2,14 @@ package ylog
 
 import (
 	"fmt"
+	"os"
+	"runtime"
+	"time"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 	// "log/syslog"
-
-	"os"
-	"runtime"
-	"time"
 )
 
 // func RFC3339TimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {

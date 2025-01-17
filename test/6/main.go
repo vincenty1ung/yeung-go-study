@@ -16,10 +16,10 @@ var msg string
 
 // [00001000,00000101,00000010...]
 func aGoroutine() {
-	var msg string = "hello, world"
+	var msg = "hello, world"
 	fmt.Println(msg)
 
-	var bytes []byte = []byte(msg)
+	var bytes = []byte(msg)
 	fmt.Println(bytes)
 	for _, v := range bytes {
 		fmt.Println(fmt.Sprintf("%s ,计算机里是这样表示的:%b", string(v), v))

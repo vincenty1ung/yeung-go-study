@@ -10,8 +10,8 @@ package yredis
 //
 // 	"github.com/go-redis/redis/v8"
 // 	jsoniter "github.com/json-iterator/go"
-// 	"github.com/uncleyeung/yeung-go-study/utils/encoding/ujson"
-// 	"github.com/uncleyeung/yeung-go-study/utils/ulog"
+// 	"github.com/vincenty1ung/yeung-go-study/utils/encoding/ujson"
+// 	"github.com/vincenty1ung/yeung-go-study/utils/ulog"
 // 	"go.uber.org/zap"
 // )
 //

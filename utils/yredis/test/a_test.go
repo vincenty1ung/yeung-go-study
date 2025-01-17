@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/uncleyeung/yeung-go-study/utils/yredis"
+	"github.com/vincenty1ung/yeung-go-study/utils/yredis"
 )
 
 func TestTest(t *testing.T) {

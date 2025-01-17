@@ -9,9 +9,9 @@ import (
 )
 
 var (
-	sendChan              chan string = make(chan string, 120)
-	quitChan              chan string = make(chan string)
-	readServerMessageChan chan string = make(chan string)
+	sendChan              = make(chan string, 120)
+	quitChan              = make(chan string)
+	readServerMessageChan = make(chan string)
 )
 
 func main() {

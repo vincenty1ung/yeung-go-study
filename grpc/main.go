@@ -5,11 +5,12 @@ import (
 	"log"
 	"net"
 
-	"github.com/uncleyeung/yeung-go-study/grpc/etcd"
-	"github.com/uncleyeung/yeung-go-study/grpc/pb"
-	"github.com/uncleyeung/yeung-go-study/grpc/server"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+
+	"github.com/vincenty1ung/yeung-go-study/grpc/etcd"
+	"github.com/vincenty1ung/yeung-go-study/grpc/pb"
+	"github.com/vincenty1ung/yeung-go-study/grpc/server"
 )
 
 var (

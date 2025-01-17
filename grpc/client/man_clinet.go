@@ -5,11 +5,12 @@ import (
 	"log"
 	"time"
 
-	"github.com/uncleyeung/yeung-go-study/grpc/pb"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"go.etcd.io/etcd/client/v3/naming/resolver"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+
+	"github.com/vincenty1ung/yeung-go-study/grpc/pb"
 )
 
 func main() {
